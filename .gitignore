@@ -4,6 +4,9 @@
 .DS_Store
 *.elf
 *.bin
+/x86_64-linux-musl-cross
+/riscv64-linux-musl-cross
+/aarch64-linux-musl-cross
 apps/*/build/
 **/target/
 apps/**/Cargo.lock
