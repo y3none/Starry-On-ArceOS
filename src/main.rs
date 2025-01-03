@@ -62,10 +62,14 @@ use alloc::sync::Arc;
 use axhal::arch::UspaceContext;
 use axsync::Mutex;
 
+// const JUNIOR: &[&str] = &[
+//     "brk", "chdir", "clone", "close", "dup2", "dup", "execve", "exit", "fork", "fstat", "getcwd",
+//     "getdents", "getpid", "getppid", "gettimeofday", "mkdir_", "mmap", "mount", "munmap", "openat",
+//     "open", "pipe", "read", "times", "umount", "uname", "unlink", "wait", "waitpid", "write", "yield"
+// ];
 const JUNIOR: &[&str] = &[
-    "brk", "chdir", "clone", "close", "dup2", "dup", "execve", "exit", "fork", "fstat", "getcwd",
-    "getdents", "getpid", "getppid", "gettimeofday", "mkdir_", "mmap", "mount", "munmap", "openat",
-    "open", "pipe", "read", "times", "umount", "uname", "unlink", "wait", "waitpid", "write", "yield"
+    "cyclictest", "exit", "fantastic_text", "forktest", "forktest_simple", "forktest_simple_c", "forktest2", "forktree", "hello_c", "hello_world",
+    "matrix", "sleep", "sleep_simple", "stack_overflow", "thread_simple", "yield"
 ];
 
 #[no_mangle]
