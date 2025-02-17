@@ -6,14 +6,26 @@
 // use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 // use core::arch::global_asm;
 
+<<<<<<< HEAD
 // use axhal::paging::MappingFlags;
 // use memory_addr::{MemoryAddr, VirtAddr};
+=======
+use alloc::{collections::btree_map::BTreeMap, vec::Vec};
+use axhal::paging::MappingFlags;
+use memory_addr::{MemoryAddr, VirtAddr};
+>>>>>>> 7ef3332d4e8d6d893769e8e0c4abb62e326786f1
 
 // global_asm!(include_str!(concat!(env!("OUT_DIR"), "/link_app.S")));
 
+<<<<<<< HEAD
 // extern "C" {
 //     fn _app_count();
 // }
+=======
+unsafe extern "C" {
+    fn _app_count();
+}
+>>>>>>> 7ef3332d4e8d6d893769e8e0c4abb62e326786f1
 
 // /// Get the number of apps.
 // pub(crate) fn get_app_count() -> usize {
@@ -219,13 +231,12 @@ pub struct ELFInfo {
 /// Entry and information about segments of the given ELF file
 pub(crate) fn load_elf(name: &str, base_addr: VirtAddr) -> ELFInfo {
     use xmas_elf::program::{Flags, SegmentData};
-    use xmas_elf::{header, ElfFile};
-    let elf_data = if let Ok(ans) = axfs::api::read(name) {
-        ans
-    } else {
-        panic!("App not found: {}", name);
-    };
-    let elf = ElfFile::new(&elf_data).expect("Error parsing app ELF file.");
+    use xmas_elf::{ElfFile, header};
+
+    let elf = ElfFile::new(
+        get_app_data_by_name(name).unwrap_or_else(|| panic!("failed to get app: {}", name)),
+    )
+    .expect("invalid ELF file");
     let elf_header = elf.header;
 
     assert_eq!(elf_header.pt1.magic, *b"\x7fELF", "invalid elf!");
@@ -236,6 +247,8 @@ pub(crate) fn load_elf(name: &str, base_addr: VirtAddr) -> ELFInfo {
         header::Machine::AArch64
     } else if cfg!(target_arch = "riscv64") {
         header::Machine::RISC_V
+    } else if cfg!(target_arch = "loongarch64") {
+        header::Machine::Other(0x102)
     } else {
         panic!("Unsupported architecture!");
     };

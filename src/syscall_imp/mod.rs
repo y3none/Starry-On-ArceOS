@@ -2,18 +2,16 @@ mod fs;
 mod mm;
 mod task;
 mod time;
-
 use axerrno::LinuxError;
 use axhal::{
     arch::TrapFrame,
-    trap::{register_trap_handler, SYSCALL},
+    trap::{SYSCALL, register_trap_handler},
 };
+use fs::*;
+use mm::*;
 use syscalls::Sysno;
-
-use self::fs::*;
-use self::mm::*;
-use self::task::*;
-use self::time::*;
+use task::*;
+use time::*;
 
 /// Macro to generate syscall body
 ///
@@ -67,6 +65,8 @@ fn handle_syscall(tf: &TrapFrame, syscall_num: usize) -> isize {
         Sysno::set_tid_address => sys_set_tid_address(tf.arg0() as _),
         Sysno::clock_gettime => sys_clock_gettime(tf.arg0() as _, tf.arg1() as _) as _,
         Sysno::exit_group => sys_exit_group(tf.arg0() as _),
+        // Sysno::getcwd => sys_getcwd(tf.arg0() as _, tf.arg1() as _) as _,
+        // Sysno::chdir => sys_chdir(tf.arg0() as _) as _,
         _ => {
             warn!("Unimplemented syscall: {}", syscall_num);
             axtask::exit(LinuxError::ENOSYS as _)

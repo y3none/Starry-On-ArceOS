@@ -9,4 +9,5 @@
 /aarch64-linux-musl-cross
 apps/*/build/
 **/target/
-apps/**/Cargo.lock
+**/Cargo.lock
+/.axconfig.*

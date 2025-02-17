@@ -61,18 +61,11 @@ use alloc::sync::Arc;
 
 use axhal::arch::UspaceContext;
 use axsync::Mutex;
-
-// const JUNIOR: &[&str] = &[
-//     "brk", "chdir", "clone", "close", "dup2", "dup", "execve", "exit", "fork", "fstat", "getcwd",
-//     "getdents", "getpid", "getppid", "gettimeofday", "mkdir_", "mmap", "mount", "munmap", "openat",
-//     "open", "pipe", "read", "times", "umount", "uname", "unlink", "wait", "waitpid", "write", "yield"
-// ];
 const JUNIOR: &[&str] = &[
     "cyclictest", "exit", "fantastic_text", "forktest", "forktest_simple", "forktest_simple_c", "forktest2", "forktree", "hello_c", "hello_world",
     "matrix", "sleep", "sleep_simple", "stack_overflow", "thread_simple", "yield"
 ];
-
-#[no_mangle]
+#[unsafe(no_mangle)]
 fn main() {
     // let testcases = option_env!("AX_TESTCASES_LIST")
     // .unwrap_or_else(|| "Please specify the testcases list by making user_apps")
@@ -81,12 +74,16 @@ fn main() {
 
     let testcases = JUNIOR;
     for testcase in testcases {
+<<<<<<< HEAD
         info!("Running testcase: {}", testcase);
+=======
+        log::info!("Running testcase: {}", testcase);
+>>>>>>> 7ef3332d4e8d6d893769e8e0c4abb62e326786f1
         let (entry_vaddr, ustack_top, uspace) = mm::load_user_app(testcase).unwrap();
         let user_task = task::spawn_user_task(
             Arc::new(Mutex::new(uspace)),
             UspaceContext::new(entry_vaddr.into(), ustack_top, 2333),
-        );
+        );        
         let exit_code = user_task.join();
         info!("User task {} exited with code: {:?}", testcase, exit_code);
     }

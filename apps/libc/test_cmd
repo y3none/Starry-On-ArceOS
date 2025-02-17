@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 test_one "LOG=off FEATURES=fp_simd" "expect_off.out"
+=======
+test_one "LOG=off FEATURES=fp_simd BLK=y NET=y" "expect_off.out"
+>>>>>>> 7ef3332d4e8d6d893769e8e0c4abb62e326786f1

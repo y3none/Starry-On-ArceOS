@@ -52,6 +52,30 @@ struct AxNamespaceImpl;
 
 #[crate_interface::impl_interface]
 impl AxNamespaceIf for AxNamespaceImpl {
+    fn current_namespace_base() -> *mut u8 {
+        let current = axtask::current();
+        // Safety: We only check whether the task extended data is null and do not access it.
+        if unsafe { current.task_ext_ptr() }.is_null() {
+            return axns::AxNamespace::global().base();
+        }
+        current.task_ext().ns.base()
+    }
+
+    pub(crate) fn clear_child_tid(&self) -> u64 {
+        self.clear_child_tid
+            .load(core::sync::atomic::Ordering::Relaxed)
+    }
+
+    pub(crate) fn set_clear_child_tid(&self, clear_child_tid: u64) {
+        self.clear_child_tid
+            .store(clear_child_tid, core::sync::atomic::Ordering::Relaxed);
+    }
+}
+
+struct AxNamespaceImpl;
+
+#[crate_interface::impl_interface]
+impl AxNamespaceIf for AxNamespaceImpl {
     #[inline(never)]
     fn current_namespace_base() -> *mut u8 {
         let current = axtask::current();
@@ -79,7 +103,7 @@ pub fn spawn_user_task(aspace: Arc<Mutex<AddrSpace>>, uctx: UspaceContext) -> Ax
             unsafe { curr.task_ext().uctx.enter_uspace(kstack_top) };
         },
         "userboot".into(),
-        crate::config::KERNEL_STACK_SIZE,
+        axconfig::plat::KERNEL_STACK_SIZE,
     );
     task.ctx_mut()
         .set_page_table_root(aspace.lock().page_table_root());
