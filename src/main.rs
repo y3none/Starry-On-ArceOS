@@ -74,11 +74,7 @@ fn main() {
 
     let testcases = JUNIOR;
     for testcase in testcases {
-<<<<<<< HEAD
-        info!("Running testcase: {}", testcase);
-=======
         log::info!("Running testcase: {}", testcase);
->>>>>>> 7ef3332d4e8d6d893769e8e0c4abb62e326786f1
         let (entry_vaddr, ustack_top, uspace) = mm::load_user_app(testcase).unwrap();
         let user_task = task::spawn_user_task(
             Arc::new(Mutex::new(uspace)),
