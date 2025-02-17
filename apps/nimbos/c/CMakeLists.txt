@@ -62,14 +62,6 @@ foreach(PATH ${SRCS})
     )
 endforeach()
 
-<<<<<<< HEAD
-add_custom_command(
-    OUTPUT syscall_ids.h
-    COMMAND sed ARGS -n -e s/__NR_/SYS_/p
-        < ${CMAKE_SOURCE_DIR}/${ARCH_DIR}/syscall_ids.h.in
-        > ${CMAKE_SOURCE_DIR}/lib/syscall_ids.h
-)
-=======
 # If arch is not x86_64, we need to use different syscall ids
 if (NOT ${ARCH} STREQUAL x86_64)
     add_custom_command(
@@ -86,4 +78,3 @@ else()
             > ${CMAKE_SOURCE_DIR}/lib/syscall_ids.h
     )
 endif()
->>>>>>> 7ef3332d4e8d6d893769e8e0c4abb62e326786f1

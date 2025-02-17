@@ -1,5 +1,6 @@
 /.vscode
 /.arceos
+/.arceos1
 /.cargo
 .DS_Store
 *.elf
@@ -7,6 +8,10 @@
 /x86_64-linux-musl-cross
 /riscv64-linux-musl-cross
 /aarch64-linux-musl-cross
+/gcc-13.2.0-loongarch64-linux-gnu
+/musl-loongarch64-1.2.2
+/gcc-13.2.0-loongarch64-linux-gnu.tgz
+/musl-loongarch64-1.2.2.tgz
 apps/*/build/
 **/target/
 **/Cargo.lock

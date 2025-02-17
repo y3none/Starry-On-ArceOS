@@ -22,10 +22,7 @@ cfg_if::cfg_if! {
         pub const SYSCALL_WRITE: usize = 64;
         pub const SYSCALL_YIELD: usize = 124;
         pub const SYSCALL_GETPID: usize = 172;
-<<<<<<< HEAD
-=======
         #[allow(dead_code)]
->>>>>>> 7ef3332d4e8d6d893769e8e0c4abb62e326786f1
         pub const SYSCALL_CLONE: usize = 220;
         pub const SYSCALL_FORK: usize = 220;
         pub const SYSCALL_EXEC: usize = 221;

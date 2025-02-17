@@ -9,9 +9,8 @@ use axhal::{
 
 use axmm::AddrSpace;
 use axtask::TaskExtRef;
-use memory_addr::VirtAddr;
 
-use crate::{config, loader};
+use crate::loader;
 
 /// Load a user app.
 ///
