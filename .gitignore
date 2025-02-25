@@ -16,3 +16,4 @@ apps/*/build/
 **/target/
 **/Cargo.lock
 /.axconfig.*
+/qemu-9.2.1
